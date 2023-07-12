@@ -17,7 +17,6 @@ ENDCLASS.
 
 CLASS zcl_ot_19_mat_ops IMPLEMENTATION.
 METHOD calculate_result.
-
     CASE iv_operation.
       WHEN '+'.
         ev_result = iv_number1 + iv_number2.
@@ -28,8 +27,5 @@ METHOD calculate_result.
       WHEN '/'.
         ev_result = iv_number1 / iv_number2.
     ENDCASE.
-
   ENDMETHOD.
-
-
 ENDCLASS.
