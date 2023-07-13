@@ -55,6 +55,18 @@ DATA:  BEGIN OF STATUS_ZOT_19_T_P_MAST               .   "state vector
 DATA:  END OF STATUS_ZOT_19_T_P_MAST               .
 CONTROLS: TCTRL_ZOT_19_T_P_MAST
             TYPE TABLEVIEW USING SCREEN '0003'.
+*...processing: ZOT_19_T_P_TWITT................................*
+DATA:  BEGIN OF STATUS_ZOT_19_T_P_TWITT              .   "state vector
+         INCLUDE STRUCTURE VIMSTATUS.
+DATA:  END OF STATUS_ZOT_19_T_P_TWITT              .
+CONTROLS: TCTRL_ZOT_19_T_P_TWITT
+            TYPE TABLEVIEW USING SCREEN '0010'.
+*...processing: ZOT_19_T_TWITTER................................*
+DATA:  BEGIN OF STATUS_ZOT_19_T_TWITTER              .   "state vector
+         INCLUDE STRUCTURE VIMSTATUS.
+DATA:  END OF STATUS_ZOT_19_T_TWITTER              .
+CONTROLS: TCTRL_ZOT_19_T_TWITTER
+            TYPE TABLEVIEW USING SCREEN '0011'.
 *.........table declarations:.................................*
 TABLES: *ZOT_19_T_KONUM                .
 TABLES: *ZOT_19_T_PERS                 .
@@ -65,6 +77,8 @@ TABLES: *ZOT_19_T_P_ETUR               .
 TABLES: *ZOT_19_T_P_ILTSM              .
 TABLES: *ZOT_19_T_P_ITUR               .
 TABLES: *ZOT_19_T_P_MAST               .
+TABLES: *ZOT_19_T_P_TWITT              .
+TABLES: *ZOT_19_T_TWITTER              .
 TABLES: ZOT_19_T_KONUM                 .
 TABLES: ZOT_19_T_PERS                  .
 TABLES: ZOT_19_T_P_AILE                .
@@ -74,6 +88,8 @@ TABLES: ZOT_19_T_P_ETUR                .
 TABLES: ZOT_19_T_P_ILTSM               .
 TABLES: ZOT_19_T_P_ITUR                .
 TABLES: ZOT_19_T_P_MAST                .
+TABLES: ZOT_19_T_P_TWITT               .
+TABLES: ZOT_19_T_TWITTER               .
 
 * general table data declarations..............
   INCLUDE LSVIMTDT                                .
