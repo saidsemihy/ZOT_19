@@ -5,43 +5,16 @@
 *&---------------------------------------------------------------------*
 REPORT zot_19_p_open_sql.
 
-*data gv_banfn type eban-banfn.
+*DATA gv_banfn TYPE eban-banfn.
 *
-*data gs_eban type eban.
+*DATA gs_eban TYPE eban.
 *
-*data gt_eban type table of eban.
-*
-*START-OF-SELECTION.
-*
-*select single banfn "Satırda ilk gordügünü alır
-*from eban
-*where bsart eq 'NB' "String sorgularında büyük küçük duyarlı !! neyse onu yaz
-*into @gv_banfn.
-*
-*
-*
-*write gv_banfn.
-*
-*  SELECT SINGLE loekz  "2 tane key oldugu için 2 keye deger verdim
-*  FROM eban
-*  WHERE banfn = '10000023'
-*    AND bnfpo = '0020'
-*  INTO @DATA(lv_loekz).
-*
-*  WRITE lv_loekz.
-*  WRITE lv_loekz.
-*
-*  SELECT SINGLE loekz
-*    FROM eban
-*    WHERE banfn = '0010000023'
-*    AND bnfpo = '0020'
-*    INTO @lv_loekz.
-*
-*  IF sy-subrc = 0.
-*    WRITE :/ lv_loekz.
-*  ELSE.
-*    WRITE :/ 'Error'.
-*  ENDIF.
+*DATA gt_eban TYPE TABLE OF eban.
+
+*DATA gs_main TYPE zot_098_t_main.
+*SELECT-OPTIONS : s_id FOR gs_main-id.
+
+START-OF-SELECTION.
 
 *  SELECT SINGLE banfn
 *  FROM eban
@@ -92,11 +65,12 @@ REPORT zot_19_p_open_sql.
 
 
 
-*  SELECT SINGLE banfn, bsart
-*  FROM eban
-*  WHERE banfn = '0010000023'
-*  AND bnfpo = '0020'
-*  INTO @DATA(ls_eban).
+  SELECT SINGLE banfn, bsart
+  FROM eban
+  WHERE banfn = '0010000023'
+  AND bnfpo = '0020'
+  INTO @DATA(ls_eban).
+  break otsyalcin.
 *
 *  IF sy-subrc = 0.
 **    WRITE :/ ls_eban-banfn, ls_eban-bsart.
@@ -126,7 +100,6 @@ REPORT zot_19_p_open_sql.
 *  ENDIF.
 
 *  DATA lr_id TYPE RANGE OF zot_098_t_main-id.
-
 *  APPEND VALUE #( sign = 'I ' option = 'EQ' low = 001 ) TO lr_id.
 *  APPEND VALUE #( sign = 'I ' option = 'EQ' low = 016 ) TO lr_id.
 
@@ -143,7 +116,7 @@ REPORT zot_19_p_open_sql.
 *    WRITE :/ 'Error'.
 *  ENDIF.
 
-*
+
 
 *  SELECT id,
 *         name
@@ -157,77 +130,246 @@ REPORT zot_19_p_open_sql.
 *  ENDIF.
 
 
-*data: sayi type i,
-*      sayi2 type p,
-*      yazi type String,
-*      lv_date2 type d,
-*      xtype type x.
-*      lv_date2 = '112023'.
-*      sayi2 = 3.
-*      lv_date2 = lv_date2 + 1.
-
-*data : lv_time type t.
-*       lv_time = '235906'.
-*       lv_time = lv_time + 1.
-
-DATA : lv_baslangic_tarih TYPE d,
-       lv_baslangic_saat  TYPE t,
-       lv_bitis_tarih     TYPE d,
-       lv_bitis_saat      TYPE t,
-       lv_fark_gun        TYPE i,
-       lv_fark_ay         TYPE i,
-       lv_fark_yil        TYPE i,
-       lv_fark_saat       TYPE i,
-       lv_fark_dakika     TYPE i,
-       lv_fark_saniye     TYPE i.
+*  SELECT id,
+*         name
+*    FROM zot_098_t_main
+*    WHERE id GT 10
+*    INTO TABLE @DATA(lt_main)
+*    UP TO 1 ROWS.
+*  IF sy-subrc = 0.
+**    DATA(ls_main) = VALUE #( lt_main[  1 ] OPTIONAL ).
+**    DATA(lv_id) = VALUE #( lt_main[  1 ]-id OPTIONAL ).
+**    cl_demo_output=>display( ls_main ).
+**    WRITE :/ lv_id.
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
 
 
-
-
-
-
-
-lv_baslangic_tarih = '20211004'.
-lv_bitis_tarih = '20211105'.
-lv_fark_gun = lv_bitis_tarih - lv_baslangic_tarih.
-lv_fark_ay = lv_fark_gun / 30.
-lv_fark_yil = lv_fark_gun / 360.
-WRITE : / 'Arasındaki gün' , lv_fark_gun.
-WRITE : / 'Arasındaki ay' , lv_fark_ay.
-WRITE : / 'Arasındaki yıl' , lv_fark_yil.
-
-*WRITE lv_baslangic_tarih DD/MM/YYYY.
-
-lv_baslangic_saat = '230500'.
-lv_bitis_saat = '010500'.
+*  SELECT mara~matnr,
+*         makt~maktx
+*  FROM mara
+*  INNER JOIN makt ON makt~matnr = mara~matnr
+*                 AND makt~spras = @sy-langu
+*  WHERE mara~matnr = '000000000000000074'
+**    AND makt~spras = @sy-langu
+*  INTO TABLE @DATA(lt_mara).
+*  IF sy-subrc = 0.
+*    cl_demo_output=>display( lt_mara ).
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
 
 
 
-IF lv_bitis_saat > lv_baslangic_saat.
+*  SELECT mara~matnr,
+*         makt1~maktx AS makt_1,
+*         makt2~maktx AS makt_2
+*  FROM mara
+*  LEFT JOIN makt AS makt1 ON makt1~matnr = mara~matnr
+*                 AND makt1~spras = @sy-langu
+*  LEFT JOIN makt AS makt2 ON makt2~matnr = mara~matnr
+*                 AND makt2~spras = 'T'
+*  WHERE mara~matnr = '000000000000000074'
+*  INTO TABLE @DATA(lt_mara).
+*  IF sy-subrc = 0.
+*    cl_demo_output=>display( lt_mara ).
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
 
-  lv_fark_saniye = lv_bitis_saat - lv_baslangic_saat.
+*
+*  DATA(lv_mtart) = CONV mara-mtart( 'HALB' ).
 
-ELSE.
-  lv_fark_saniye = lv_baslangic_saat - lv_bitis_saat.
+*  SELECT mara~matnr,
+*         makt1~maktx
+*  FROM mara
+*  INNER JOIN makt AS makt1 ON makt1~matnr = mara~matnr
+*                          AND makt1~spras = @sy-langu
+*  WHERE mara~matnr = '000000000000000074'
+*    AND mara~mtart = @lv_mtart
+*  INTO TABLE @DATA(lt_mara).
+*
+*  IF sy-subrc = 0.
+*    cl_demo_output=>display( lt_mara ).
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
 
-ENDIF.
-
-lv_fark_dakika = lv_fark_saniye / 60.
-lv_fark_saat = lv_fark_dakika / 60.
-IF lv_fark_saat > 12.
-      lv_fark_saat = 24 - lv_fark_saat.
-
-  ENDIF.
-
-WRITE : / 'saat' , lv_fark_saat.
-WRITE : / 'dakika' , lv_fark_dakika.
-WRITE : / 'saniye' , lv_fark_saniye.
-
-
-*04.10.2021
-*05.11.2021
+*  SELECT ekko~ebeln,
+*         ekpo~ebelp
+*    FROM ekko
+*    INNER JOIN ekpo ON ekpo~ebeln = ekko~ebeln
+*    WHERE ekko~loekz = @space
+*    INTO TABLE @DATA(lt_purchasing).
+*  IF sy-subrc = 0.
+*    cl_demo_output=>display( lt_purchasing ).
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
 
 
+*  DELETE FROM zot_098_t_main WHERE id = 020
+*                               AND save_date = '20240101'.
+*  COMMIT WORK AND WAIT.
+*  IF sy-subrc = 0.
+*    WRITE :/ 'Success'.
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
+
+*  UPDATE zot_098_t_main SET name = 'Ahmet'
+*  WHERE id = 003
+*    AND save_date = '20230107'.
+*  COMMIT WORK AND WAIT.
+*  IF sy-subrc = 0.
+*    WRITE :/ 'Success'.
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
 
 
-*break otsyalcin.
+*  SELECT id,
+*         save_date,
+*         name,
+*         surname,
+*         age
+*     FROM zot_098_t_main
+*     WHERE id = 003
+*     INTO TABLE @DATA(lt_main_in_db).
+
+*  DATA lt_main_modify TYPE TABLE OF zot_098_t_main.
+*
+*  APPEND VALUE #( id        = 098
+*                  save_date = sy-datum
+*                  name      = 'Tarık'
+*                  surname   = 'Tekin'
+*                  age       =  65 ) TO lt_main_modify.
+*
+*  APPEND VALUE #( id        = 005
+*                  save_date = sy-datum
+*                  name      = 'Hakan'
+*                  surname   = 'KPR'
+*                  age       =  55 ) TO lt_main_modify.
+*
+*  MODIFY zot_098_t_main FROM TABLE lt_main_modify.
+*  IF sy-subrc = 0.
+*    COMMIT WORK AND WAIT.
+*    WRITE :/ 'Success'.
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
+
+
+
+
+*  SELECT a~matnr,
+*         b~maktx
+*    FROM mara AS a
+*    INNER JOIN makt AS b ON b~matnr = a~matnr
+*                        AND b~spras = @sy-langu
+*    WHERE a~matnr =  '000000000000000074'
+*    INTO TABLE @DATA(lt_mara).
+*  IF sy-subrc = 0.
+*    WRITE :/ 'Success'.
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.
+
+
+
+
+*
+*  TYPES : BEGIN OF ty_creation,
+*            number      TYPE i,
+*            create_date TYPE datum,
+*          END OF ty_creation,
+*          tt_creation TYPE TABLE OF ty_creation.
+*  DATA lt_creation TYPE tt_creation.
+*
+*
+*  TYPES : BEGIN OF ty_material,
+*            number TYPE i,
+*            matnr  TYPE mara-matnr,
+*            matkl  TYPE mara-matkl,
+*          END OF ty_material,
+*          tt_material TYPE TABLE OF ty_material.
+*  DATA ls_material TYPE ty_material.
+*  DATA lt_material TYPE tt_material.
+*
+*  APPEND VALUE #(  number = 1
+*                   create_date = '20230101' ) TO lt_creation.
+*  APPEND VALUE #(  number = 2
+*                   create_date = '20240101' ) TO lt_creation.
+*  APPEND VALUE #(  number = 3
+*                   create_date = '20250101' ) TO lt_creation.
+*  APPEND VALUE #(  number = 4
+*                   create_date = '20260101' ) TO lt_creation.
+*
+*  ls_material-number = 1.
+*  ls_material-matnr = '000000000000000074'.
+*  ls_material-matkl = 'L003'.
+*  APPEND ls_material TO lt_material.
+*  CLEAR ls_material.
+*
+*  APPEND VALUE #( number = 2
+*                  matnr  = '000000000000000075'
+*                  matkl  = 'L004'
+*                  ) TO lt_material.
+*
+*  lt_material = VALUE #( BASE lt_material ( number = 3
+*                                            matnr = '000000000000000076'
+*                                            matkl = 'L005'
+*                                          ) ).
+*
+*  INSERT VALUE #( number = 4
+*                  matnr = '000000000000000077'
+*                  matkl = 'L007'
+*                  ) INTO TABLE lt_material.
+
+*  SELECT SUM( number ) AS total
+*  FROM @lt_material AS lt
+*  WHERE number NE @space
+*  INTO @DATA(lv_sum).
+*
+*  SELECT MAX( number ) AS max
+*  FROM @lt_material AS lt
+*  WHERE number NE @space
+*  INTO @DATA(lv_max).
+
+*  LOOP AT lt_material ASSIGNING FIELD-SYMBOL(<ls_main>).
+*    <ls_main>-number = 5.
+*  ENDLOOP.
+*
+*  LOOP AT lt_material REFERENCE INTO DATA(ls_ref_main).
+*    ls_ref_main->number = 6.
+*  ENDLOOP.
+
+*  SORT lt_material ASCENDING BY number.
+*  SORT lt_material DESCENDING BY number.
+*  DELETE lt_material WHERE number = 4.
+
+*  DATA lv_counter TYPE i.
+*  DO 10 TIMES.
+*    lv_counter += 1.
+*    APPEND VALUE #( number = lv_counter
+*                    matnr  = 'A' && lv_counter
+*                    matkl  = 'L' && lv_counter
+*                   ) TO lt_material.
+*
+*  ENDDO.
+*
+*  SORT lt_creation ASCENDING BY number.
+*  LOOP AT lt_material INTO ls_material.
+*    READ TABLE lt_creation INTO DATA(ls_creation) WITH KEY number = ls_material-number BINARY SEARCH.
+*    IF sy-subrc = 0.
+*      WRITE :/ ls_creation-number, ls_material-matnr, ls_creation-create_date.
+*    ENDIF.
+*  ENDLOOP.
+
+*  IF lines( lt_material ) > 0.
+*    cl_demo_output=>display( lt_material ).
+*    WRITE : lv_max.
+*  ELSE.
+*    WRITE :/ 'Error'.
+*  ENDIF.

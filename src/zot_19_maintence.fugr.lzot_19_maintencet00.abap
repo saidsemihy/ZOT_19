@@ -61,12 +61,24 @@ DATA:  BEGIN OF STATUS_ZOT_19_T_P_TWITT              .   "state vector
 DATA:  END OF STATUS_ZOT_19_T_P_TWITT              .
 CONTROLS: TCTRL_ZOT_19_T_P_TWITT
             TYPE TABLEVIEW USING SCREEN '0010'.
+*...processing: ZOT_19_T_TIME...................................*
+DATA:  BEGIN OF STATUS_ZOT_19_T_TIME                 .   "state vector
+         INCLUDE STRUCTURE VIMSTATUS.
+DATA:  END OF STATUS_ZOT_19_T_TIME                 .
+CONTROLS: TCTRL_ZOT_19_T_TIME
+            TYPE TABLEVIEW USING SCREEN '0012'.
 *...processing: ZOT_19_T_TWITTER................................*
 DATA:  BEGIN OF STATUS_ZOT_19_T_TWITTER              .   "state vector
          INCLUDE STRUCTURE VIMSTATUS.
 DATA:  END OF STATUS_ZOT_19_T_TWITTER              .
 CONTROLS: TCTRL_ZOT_19_T_TWITTER
             TYPE TABLEVIEW USING SCREEN '0011'.
+*...processing: ZOT_19_T_ZMN....................................*
+DATA:  BEGIN OF STATUS_ZOT_19_T_ZMN                  .   "state vector
+         INCLUDE STRUCTURE VIMSTATUS.
+DATA:  END OF STATUS_ZOT_19_T_ZMN                  .
+CONTROLS: TCTRL_ZOT_19_T_ZMN
+            TYPE TABLEVIEW USING SCREEN '0013'.
 *.........table declarations:.................................*
 TABLES: *ZOT_19_T_KONUM                .
 TABLES: *ZOT_19_T_PERS                 .
@@ -78,7 +90,9 @@ TABLES: *ZOT_19_T_P_ILTSM              .
 TABLES: *ZOT_19_T_P_ITUR               .
 TABLES: *ZOT_19_T_P_MAST               .
 TABLES: *ZOT_19_T_P_TWITT              .
+TABLES: *ZOT_19_T_TIME                 .
 TABLES: *ZOT_19_T_TWITTER              .
+TABLES: *ZOT_19_T_ZMN                  .
 TABLES: ZOT_19_T_KONUM                 .
 TABLES: ZOT_19_T_PERS                  .
 TABLES: ZOT_19_T_P_AILE                .
@@ -89,7 +103,9 @@ TABLES: ZOT_19_T_P_ILTSM               .
 TABLES: ZOT_19_T_P_ITUR                .
 TABLES: ZOT_19_T_P_MAST                .
 TABLES: ZOT_19_T_P_TWITT               .
+TABLES: ZOT_19_T_TIME                  .
 TABLES: ZOT_19_T_TWITTER               .
+TABLES: ZOT_19_T_ZMN                   .
 
 * general table data declarations..............
   INCLUDE LSVIMTDT                                .
