@@ -7,24 +7,27 @@ FORM get_data .
 
   IF p_sat EQ abap_true.
 
-    SELECT banfn,
-           bnfpo,
-           matkl,
-           matnr,
-           menge,
-           meins
-     FROM eban INTO TABLE @gt_eban WHERE banfn IN @s_banfn AND bnfpo IN @s_bnfpo.
+    SELECT eban~banfn,
+           eban~bnfpo,
+           eban~matkl,
+           eban~matnr,
+           eban~menge,
+           eban~meins
+     FROM eban join ekpo on eban~banfn = ekpo~banfn and eban~bnfpo = ekpo~bnfpo
+     WHERE eban~banfn IN @s_banfn AND eban~bnfpo IN @s_bnfpo
+     INTO TABLE @gt_eban .
 
   ELSEIF p_sas EQ abap_true.
 
-    SELECT ebeln,
-           ebelp,
-           matkl,
-           matnr,
-           menge,
-           meins
-    FROM ekpo INTO TABLE @gt_ekpo WHERE ebeln IN @s_ebeln AND matkl IN @s_matkl.
-
+    SELECT ekpo~ebeln,
+           ekpo~ebelp,
+           ekpo~matkl,
+           ekpo~matnr,
+           ekpo~menge,
+           ekpo~meins
+    FROM ekpo join eban on eban~banfn = ekpo~banfn and eban~bnfpo = ekpo~bnfpo
+    INTO TABLE @gt_ekpo WHERE ekpo~ebeln IN @s_ebeln AND ekpo~matkl IN @s_matkl.
+*FROM ekpo JOIN eban  ON eban~banfn = ekpo~banfn AND eban~bnfpo = ekpo~bnfpo
   ENDIF.
 
 LOOP AT gt_eban ASSIGNING <gfs_eban>.
