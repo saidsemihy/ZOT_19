@@ -32,6 +32,9 @@ DATA: go_custom TYPE REF TO cl_gui_custom_container,
       gs_layout TYPE lvc_s_layo,
       gv_title  TYPE char50.
 
+
+
+
 FIELD-SYMBOLS: <gfs_eban> TYPE zot_19_s_eban,
                <gfs_ekpo> TYPE zot_19_s_ekpo.
 
@@ -50,7 +53,6 @@ AT SELECTION-SCREEN OUTPUT.
 
     ENDIF.
   ENDLOOP.
-
 
 FORM delete_select_options.
   REFRESH s_banfn.

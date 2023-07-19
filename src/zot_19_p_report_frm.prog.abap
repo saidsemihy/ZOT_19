@@ -52,7 +52,7 @@ ENDFORM.
 
 
 FORM set_fcat .
-IF p_sas EQ abap_true.
+IF p_sat EQ abap_true.
 
   CALL FUNCTION 'LVC_FIELDCATALOG_MERGE'
     EXPORTING
@@ -104,7 +104,7 @@ FORM display_alv .
     EXPORTING
       i_parent = go_custom.
 
-  IF p_sas EQ abap_true.
+  IF p_sat EQ abap_true.
 
   CALL METHOD go_grid->set_table_for_first_display
     EXPORTING
@@ -114,7 +114,7 @@ FORM display_alv .
       it_outtab        = gt_eban
       it_fieldcatalog  = gt_fcat.
 
-  ELSEIF p_sat EQ abap_true.
+  ELSEIF p_sas EQ abap_true.
 
   CALL METHOD go_grid->set_table_for_first_display
     EXPORTING
