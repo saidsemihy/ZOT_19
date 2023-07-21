@@ -21,6 +21,7 @@ SELECTION-SCREEN BEGIN OF BLOCK b3 WITH FRAME TITLE TEXT-003.
               p_sas RADIOBUTTON GROUP g1.
 SELECTION-SCREEN END OF BLOCK b3.
 
+
 DATA: go_custom TYPE REF TO cl_gui_custom_container,
       go_grid   TYPE REF TO cl_gui_alv_grid,
       gt_eban   TYPE TABLE OF zot_19_s_eban,

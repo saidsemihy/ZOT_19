@@ -1,0 +1,724 @@
+*&---------------------------------------------------------------------*
+*& Report zot_19_p_sport
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zot_19_p_sport.
+
+TYPES: BEGIN OF lty_torba,
+         takim_adi TYPE char20,
+         ulke      TYPE char2,
+       END OF lty_torba.
+
+DATA: lt_torba_1 TYPE TABLE OF lty_torba.
+DATA: ls_torba_1 TYPE  lty_torba.
+DATA: lt_torba_2 TYPE TABLE OF lty_torba.
+DATA: ls_torba_2 TYPE  lty_torba.
+DATA: lt_torba_3 TYPE TABLE OF lty_torba.
+DATA: ls_torba_3 TYPE lty_torba.
+DATA: lt_torba_4 TYPE TABLE OF lty_torba.
+DATA: ls_torba_4 TYPE  lty_torba.
+
+
+lt_torba_1 = VALUE #( BASE lt_torba_1   (
+                                         takim_adi = 'Liverpool'
+                                         ulke = 'EN'
+                                         ) ).
+
+lt_torba_1 = VALUE #( BASE lt_torba_1   (
+                                         takim_adi = 'Bayern Munih'
+                                         ulke = 'DE'
+                                         ) ).
+lt_torba_1 = VALUE #( BASE lt_torba_1   (
+                                         takim_adi = 'PSG'
+                                         ulke = 'FR'
+                                         ) ).
+lt_torba_1 = VALUE #( BASE lt_torba_1   (
+                                         takim_adi = 'Inter'
+                                         ulke = 'IT'
+                                         ) ).
+
+lt_torba_2 = VALUE #( BASE lt_torba_2   (
+                                         takim_adi = 'Mande City'
+                                         ulke = 'EN'
+                                         ) ).
+lt_torba_2 = VALUE #( BASE lt_torba_2   (
+                                         takim_adi = 'PSV'
+                                         ulke = 'NE'
+                                         ) ).
+lt_torba_2 = VALUE #( BASE lt_torba_2   (
+                                         takim_adi = 'Real Madrid'
+                                         ulke = 'ES'
+                                         ) ).
+lt_torba_2 = VALUE #( BASE lt_torba_2   (
+                                         takim_adi = 'Porto'
+                                         ulke = 'PO'
+                                         ) ).
+
+lt_torba_3 = VALUE #( BASE lt_torba_3   (
+                                         takim_adi = 'Dortmand'
+                                         ulke = 'DE'
+                                         ) ).
+
+lt_torba_3 = VALUE #( BASE lt_torba_3   (
+                                         takim_adi = 'Marsilyo'
+                                         ulke = 'FR'
+                                         ) ).
+lt_torba_3 = VALUE #( BASE lt_torba_3   (
+                                         takim_adi = 'Ajax'
+                                         ulke = 'NE'
+                                         ) ).
+lt_torba_3 = VALUE #( BASE lt_torba_3   (
+                                         takim_adi = 'Galatasaray'
+                                         ulke = 'GS'
+                                         ) ).
+lt_torba_4 = VALUE #( BASE lt_torba_4   (
+                                         takim_adi = 'Atletico Madrid'
+                                         ulke = 'ES'
+                                         ) ).
+lt_torba_4 = VALUE #( BASE lt_torba_4   (
+                                         takim_adi = 'Roma'
+                                         ulke = 'IT'
+                                         ) ).
+lt_torba_4 = VALUE #( BASE lt_torba_4   (
+                                         takim_adi = 'Aek'
+                                         ulke = 'GR'
+                                         ) ).
+
+lt_torba_4 = VALUE #( BASE lt_torba_4   (
+                                         takim_adi = 'Steaua Bükreş'
+                                         ulke = 'RO'
+                                         ) ).
+
+
+
+
+
+
+TYPES: BEGIN OF lty_takimlar,
+         takim_adi TYPE char20,
+         ulke      TYPE char2,
+       END OF lty_takimlar.
+TYPES: BEGIN OF lty_doluluk,
+         doluluk TYPE char2,
+       END OF lty_doluluk.
+DATA: lt_doluluk TYPE TABLE OF lty_doluluk.
+DATA:ls_doluluk TYPE lty_doluluk.
+
+DATA: lt_takim_A TYPE TABLE OF lty_takimlar.
+DATA: lt_takim_B TYPE TABLE OF lty_takimlar.
+DATA: lt_takim_C TYPE TABLE OF lty_takimlar.
+DATA: lt_takim_D TYPE TABLE OF lty_takimlar.
+
+DATA: ls_takim_A TYPE lty_takimlar.
+DATA: ls_takim_B TYPE lty_takimlar.
+DATA: ls_takim_C TYPE lty_takimlar.
+DATA: ls_takim_D TYPE lty_takimlar.
+
+
+DATA :
+  lv_RndI TYPE i,
+  lv_i    TYPE i.
+
+
+*lv_i = 4.
+*
+*WHILE lv_i > 0.
+*
+*  CALL FUNCTION 'QF05_RANDOM_INTEGER'
+*    EXPORTING
+*      ran_int_max   = 4
+*      ran_int_min   = 1
+*    IMPORTING
+*      ran_int       = lv_RndI
+*    EXCEPTIONS
+*      invalid_input = 1
+*      OTHERS        = 2.
+*
+*  WRITE :/ 'The Random Number Generated by QF05_RANDOM_INTEGER is : ', lv_RndI.
+*
+*  lv_i = lv_i - 1.
+*ENDWHILE.
+
+
+DATA: lv_sayac TYPE i.
+WHILE lv_sayac < 16.
+
+  CALL FUNCTION 'QF05_RANDOM_INTEGER'
+    EXPORTING
+      ran_int_max   = 4
+      ran_int_min   = 1
+    IMPORTING
+      ran_int       = lv_RndI
+    EXCEPTIONS
+      invalid_input = 1
+      OTHERS        = 2.
+
+  CASE lv_RndI.
+    WHEN 1.
+
+      CALL FUNCTION 'QF05_RANDOM_INTEGER'
+        EXPORTING
+          ran_int_max   = 4
+          ran_int_min   = 1
+        IMPORTING
+          ran_int       = lv_RndI
+        EXCEPTIONS
+          invalid_input = 1
+          OTHERS        = 2.
+
+      CASE lv_RndI.
+        WHEN 1.
+          LOOP AT lt_torba_1 INTO ls_torba_1. "takim, ulke
+            READ TABLE lt_takim_a INTO ls_takim_a WITH KEY takim_adi = ls_torba_1-takim_adi
+                                                           ulke = ls_torba_1-ulke.
+
+            DATA(lv_true) = sy-subrc.
+
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '1a'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+
+          LOOP AT lt_takim_a INTO ls_takim_a.
+            READ TABLE lt_torba_1 INTO ls_torba_1 WITH KEY ulke = ls_takim_a-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+
+
+
+
+          IF lv_true NE 0 AND  lines( lt_takim_a ) < 4.
+
+            ls_takim_a-takim_adi = ls_torba_1-takim_adi.
+            ls_takim_a-ulke = ls_torba_1-ulke.
+            INSERT ls_takim_a INTO TABLE lt_takim_a.
+            DELETE TABLE lt_torba_1 FROM ls_torba_1.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '1a'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+
+        WHEN 2.
+          LOOP AT lt_torba_2 INTO ls_torba_2. "takim, ulke
+            READ TABLE lt_takim_a INTO ls_takim_a WITH KEY takim_adi = ls_torba_2-takim_adi
+                                                           ulke = ls_torba_2-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '2a'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_a INTO ls_takim_a.
+            READ TABLE lt_torba_2 INTO ls_torba_2 WITH KEY ulke = ls_takim_a-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND  lines( lt_takim_a ) < 4.
+
+            ls_takim_a-takim_adi = ls_torba_2-takim_adi.
+            ls_takim_a-ulke = ls_torba_2-ulke.
+            INSERT ls_takim_a INTO TABLE lt_takim_a.
+            DELETE TABLE lt_torba_2 FROM ls_torba_2.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '2a'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 3.
+          LOOP AT lt_torba_3 INTO ls_torba_3. "takim, ulke
+            READ TABLE lt_takim_a INTO ls_takim_a WITH KEY takim_adi = ls_torba_3-takim_adi
+                                                           ulke = ls_torba_3-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '3a'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_a INTO ls_takim_a.
+            READ TABLE lt_torba_3 INTO ls_torba_3 WITH KEY ulke = ls_takim_a-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+
+          IF lv_true NE 0 AND  lines( lt_takim_a ) < 4.
+
+            ls_takim_a-takim_adi = ls_torba_3-takim_adi.
+            ls_takim_a-ulke = ls_torba_3-ulke.
+            INSERT ls_takim_a INTO TABLE lt_takim_a.
+            DELETE TABLE lt_torba_3 FROM ls_torba_3.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '3a'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 4.
+          LOOP AT lt_torba_4 INTO ls_torba_4. "takim, ulke
+            READ TABLE lt_takim_a INTO ls_takim_a WITH KEY takim_adi = ls_torba_4-takim_adi
+                                                           ulke = ls_torba_4-ulke.
+            lv_true = sy-subrc.
+
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '4a'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_a INTO ls_takim_a.
+            READ TABLE lt_torba_4 INTO ls_torba_4 WITH KEY ulke = ls_takim_a-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND  lines( lt_takim_a ) < 4.
+
+            ls_takim_a-takim_adi = ls_torba_4-takim_adi.
+            ls_takim_a-ulke = ls_torba_4-ulke.
+            INSERT ls_takim_a INTO TABLE lt_takim_a.
+            DELETE TABLE lt_torba_4 FROM ls_torba_4.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '4a'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+      ENDCASE.
+
+
+
+    WHEN 2.
+      CALL FUNCTION 'QF05_RANDOM_INTEGER'
+        EXPORTING
+          ran_int_max   = 4
+          ran_int_min   = 1
+        IMPORTING
+          ran_int       = lv_RndI
+        EXCEPTIONS
+          invalid_input = 1
+          OTHERS        = 2.
+
+      CASE lv_RndI.
+        WHEN 1.
+          LOOP AT lt_torba_1 INTO ls_torba_1. "takim, ulke
+            READ TABLE lt_takim_b INTO ls_takim_b WITH KEY takim_adi = ls_torba_1-takim_adi
+                                                           ulke = ls_torba_1-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '1b'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_b INTO ls_takim_b.
+            READ TABLE lt_torba_1 INTO ls_torba_1 WITH KEY ulke = ls_takim_b-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_b ) < 4.
+
+            ls_takim_b-takim_adi = ls_torba_1-takim_adi.
+            ls_takim_b-ulke = ls_torba_1-ulke.
+            INSERT ls_takim_b INTO TABLE lt_takim_b.
+            DELETE TABLE lt_torba_1 FROM ls_torba_1.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '1b'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 2.
+          LOOP AT lt_torba_2 INTO ls_torba_2. "takim, ulke
+            READ TABLE lt_takim_b INTO ls_takim_b WITH KEY takim_adi = ls_torba_2-takim_adi
+                                                           ulke = ls_torba_2-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '2b'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_b INTO ls_takim_b.
+            READ TABLE lt_torba_2 INTO ls_torba_2 WITH KEY ulke = ls_takim_b-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_b ) < 4.
+
+            ls_takim_b-takim_adi = ls_torba_2-takim_adi.
+            ls_takim_b-ulke = ls_torba_2-ulke.
+            INSERT ls_takim_b INTO TABLE lt_takim_b.
+            DELETE TABLE lt_torba_2 FROM ls_torba_2.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '2b'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 3.
+          LOOP AT lt_torba_3 INTO ls_torba_3. "takim, ulke
+            READ TABLE lt_takim_b INTO ls_takim_b WITH KEY takim_adi = ls_torba_3-takim_adi
+                                                           ulke = ls_torba_3-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '3a'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_b INTO ls_takim_b.
+            READ TABLE lt_torba_3 INTO ls_torba_3 WITH KEY ulke = ls_takim_b-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+
+          IF lv_true NE 0 AND lines( lt_takim_b ) < 4.
+
+            ls_takim_b-takim_adi = ls_torba_3-takim_adi.
+            ls_takim_b-ulke = ls_torba_3-ulke.
+            INSERT ls_takim_b INTO TABLE lt_takim_b.
+            DELETE TABLE lt_torba_3 FROM ls_torba_3.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '3b'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 4.
+          LOOP AT lt_torba_4 INTO ls_torba_4. "takim, ulke
+            READ TABLE lt_takim_b INTO ls_takim_b WITH KEY takim_adi = ls_torba_4-takim_adi
+                                                           ulke = ls_torba_4-ulke.
+            lv_true = sy-subrc.
+
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '4b'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_b INTO ls_takim_b.
+            READ TABLE lt_torba_4 INTO ls_torba_4 WITH KEY ulke = ls_takim_b-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_b ) < 4.
+
+            ls_takim_b-takim_adi = ls_torba_4-takim_adi.
+            ls_takim_b-ulke = ls_torba_4-ulke.
+
+
+            INSERT ls_takim_b INTO TABLE lt_takim_b.
+            DELETE TABLE lt_torba_4 FROM ls_torba_4.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '4b'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+
+          ENDIF.
+      ENDCASE.
+    WHEN 3.
+
+      CALL FUNCTION 'QF05_RANDOM_INTEGER'
+        EXPORTING
+          ran_int_max   = 4
+          ran_int_min   = 1
+        IMPORTING
+          ran_int       = lv_RndI
+        EXCEPTIONS
+          invalid_input = 1
+          OTHERS        = 2.
+
+      CASE lv_RndI.
+        WHEN 1.
+          LOOP AT lt_torba_1 INTO ls_torba_1. "takim, ulke
+            READ TABLE lt_takim_c INTO ls_takim_c WITH KEY takim_adi = ls_torba_1-takim_adi
+                                                           ulke = ls_torba_1-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '1c'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_c INTO ls_takim_c.
+            READ TABLE lt_torba_1 INTO ls_torba_1 WITH KEY ulke = ls_takim_c-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_c ) < 4.
+
+            ls_takim_c-takim_adi = ls_torba_1-takim_adi.
+            ls_takim_c-ulke = ls_torba_1-ulke.
+            INSERT ls_takim_c INTO TABLE lt_takim_c.
+            DELETE TABLE lt_torba_1 FROM ls_torba_1.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '1c'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 2.
+          LOOP AT lt_torba_2 INTO ls_torba_2. "takim, ulke
+            READ TABLE lt_takim_c INTO ls_takim_c WITH KEY takim_adi = ls_torba_2-takim_adi
+                                                           ulke = ls_torba_2-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '2c'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_c INTO ls_takim_c.
+            READ TABLE lt_torba_2 INTO ls_torba_2 WITH KEY ulke = ls_takim_c-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_c ) < 4.
+
+            ls_takim_c-takim_adi = ls_torba_2-takim_adi.
+            ls_takim_c-ulke = ls_torba_2-ulke.
+            INSERT ls_takim_c INTO TABLE lt_takim_c.
+            DELETE TABLE lt_torba_2 FROM ls_torba_2.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '2c'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 3.
+          LOOP AT lt_torba_3 INTO ls_torba_3. "takim, ulke
+            READ TABLE lt_takim_c INTO ls_takim_c WITH KEY takim_adi = ls_torba_3-takim_adi
+                                                           ulke = ls_torba_3-ulke.
+            lv_true = sy-subrc.
+
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '3c'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_c INTO ls_takim_c.
+            READ TABLE lt_torba_3 INTO ls_torba_3 WITH KEY ulke = ls_takim_c-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_c ) < 4.
+
+            ls_takim_c-takim_adi = ls_torba_3-takim_adi.
+            ls_takim_c-ulke = ls_torba_3-ulke.
+            INSERT ls_takim_c INTO TABLE lt_takim_c.
+            DELETE TABLE lt_torba_3 FROM ls_torba_3.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '3c'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 4.
+          LOOP AT lt_torba_4 INTO ls_torba_4. "takim, ulke
+            READ TABLE lt_takim_c INTO ls_takim_c WITH KEY takim_adi = ls_torba_4-takim_adi
+                                                           ulke = ls_torba_4-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '4c'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_c INTO ls_takim_c.
+            READ TABLE lt_torba_4 INTO ls_torba_4 WITH KEY ulke = ls_takim_c-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_c ) < 4.
+
+            ls_takim_c-takim_adi = ls_torba_4-takim_adi.
+            ls_takim_c-ulke = ls_torba_4-ulke.
+            INSERT ls_takim_c INTO TABLE lt_takim_c.
+            DELETE TABLE lt_torba_4 FROM ls_torba_4.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '4c'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+      ENDCASE.
+    WHEN 4.
+      CALL FUNCTION 'QF05_RANDOM_INTEGER'
+        EXPORTING
+          ran_int_max   = 4
+          ran_int_min   = 1
+        IMPORTING
+          ran_int       = lv_RndI
+        EXCEPTIONS
+          invalid_input = 1
+          OTHERS        = 2.
+
+      CASE lv_RndI.
+        WHEN 1.
+          LOOP AT lt_torba_1 INTO ls_torba_1. "takim, ulke
+            READ TABLE lt_takim_d INTO ls_takim_d WITH KEY takim_adi = ls_torba_1-takim_adi
+                                                           ulke = ls_torba_1-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '1d'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_d INTO ls_takim_d.
+            READ TABLE lt_torba_1 INTO ls_torba_1 WITH KEY ulke = ls_takim_d-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_d ) < 4.
+
+            ls_takim_d-takim_adi = ls_torba_1-takim_adi.
+            ls_takim_d-ulke = ls_torba_1-ulke.
+            INSERT ls_takim_d INTO TABLE lt_takim_d.
+            DELETE TABLE lt_torba_1 FROM ls_torba_1.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '1d'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 2.
+          LOOP AT lt_torba_2 INTO ls_torba_2. "takim, ulke
+            READ TABLE lt_takim_d INTO ls_takim_d WITH KEY takim_adi = ls_torba_2-takim_adi
+                                                           ulke = ls_torba_2-ulke.
+            lv_true = sy-subrc.
+
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '2d'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_d INTO ls_takim_d.
+            READ TABLE lt_torba_2 INTO ls_torba_2 WITH KEY ulke = ls_takim_d-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_d ) < 4.
+
+            ls_takim_d-takim_adi = ls_torba_2-takim_adi.
+            ls_takim_d-ulke = ls_torba_2-ulke.
+            INSERT ls_takim_d INTO TABLE lt_takim_d.
+            DELETE TABLE lt_torba_2 FROM ls_torba_2.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '2d'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 3.
+          LOOP AT lt_torba_3 INTO ls_torba_3. "takim, ulke
+            READ TABLE lt_takim_d INTO ls_takim_d WITH KEY takim_adi = ls_torba_3-takim_adi
+                                                           ulke = ls_torba_3-ulke.
+            lv_true = sy-subrc.
+
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '3d'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_d INTO ls_takim_d.
+            READ TABLE lt_torba_3 INTO ls_torba_3 WITH KEY ulke = ls_takim_d-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_d ) < 4.
+
+            ls_takim_d-takim_adi = ls_torba_3-takim_adi.
+            ls_takim_d-ulke = ls_torba_3-ulke.
+            INSERT ls_takim_d INTO TABLE lt_takim_d.
+            DELETE TABLE lt_torba_3 FROM ls_torba_3.
+            CLEAR ls_torba_3.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '3d'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+        WHEN 4.
+          LOOP AT lt_torba_4 INTO ls_torba_4. "takim, ulke
+            READ TABLE lt_takim_d INTO ls_takim_d WITH KEY takim_adi = ls_torba_4-takim_adi
+                                                           ulke = ls_torba_4-ulke.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          LOOP AT lt_doluluk INTO ls_doluluk.
+
+            IF ls_doluluk-doluluk EQ '4d'.
+              lv_true = 0.
+            ENDIF.
+          ENDLOOP.
+          LOOP AT lt_takim_d INTO ls_takim_d.
+            READ TABLE lt_torba_4 INTO ls_torba_4 WITH KEY ulke = ls_takim_d-ulke.
+            IF sy-subrc EQ 0.
+              lv_true = 0.
+            ENDIF.
+            lv_true = sy-subrc.
+          ENDLOOP.
+          IF lv_true NE 0 AND lines( lt_takim_d ) < 4.
+
+            ls_takim_d-takim_adi = ls_torba_4-takim_adi.
+            ls_takim_d-ulke = ls_torba_4-ulke.
+            INSERT ls_takim_d INTO TABLE lt_takim_d.
+            DELETE TABLE lt_torba_4 FROM ls_torba_4.
+            lv_sayac += 1.
+            ls_doluluk-doluluk = '4d'.
+            INSERT ls_doluluk INTO TABLE lt_doluluk.
+            PERFORM gv_clear.
+          ENDIF.
+
+
+      ENDCASE.
+
+  ENDCASE.
+
+
+ENDWHILE.
+* cl_demo_output=>write(  'A takımı: ' ).
+  cl_demo_output=>write(  lt_takim_a ).
+*  cl_demo_output=>write(  'B takımı: ' ).
+  cl_demo_output=>write(  lt_takim_b ).
+*  cl_demo_output=>write(  'C takımı: ' ).
+  cl_demo_output=>write(  lt_takim_c ).
+*  cl_demo_output=>write(  'D takımı: ' ).
+  cl_demo_output=>write(  lt_takim_d ).
+
+  cl_demo_output=>display(  ).
+BREAK otsyalcin.
+FORM gv_clear.
+  CLEAR: ls_torba_1,
+  ls_torba_2 ,
+  ls_torba_3 ,
+  ls_torba_4 .
+ENDFORM.

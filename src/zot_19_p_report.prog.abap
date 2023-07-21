@@ -19,6 +19,7 @@ REPORT zot_19_p_report.
 
 "SAT ->eban (ebeln,bsart)
 "SAS ->ekpo
+
 INCLUDE zot_19_p_report_top.
 
 
