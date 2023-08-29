@@ -5,6 +5,12 @@
 *&---------------------------------------------------------------------*
 REPORT zot_19_sip_kirilim.
 TABLES: vbap, vbak.
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
+
+  PARAMETERS: p_val1 TYPE i OBLIGATORY,
+              p_val2 TYPE i OBLIGATORY.
+
+SELECTION-SCREEN END OF BLOCK b1.
 SELECTION-SCREEN BEGIN OF BLOCK a1 WITH FRAME TITLE TEXT-001.
 
   SELECT-OPTIONS: s_sipno FOR vbak-vbeln,

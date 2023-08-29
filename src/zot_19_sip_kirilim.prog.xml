@@ -48,6 +48,18 @@
     </item>
     <item>
      <ID>S</ID>
+     <KEY>P_VAL1</KEY>
+     <ENTRY>Sayı 1</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_VAL2</KEY>
+     <ENTRY>Sayı 2</ENTRY>
+     <LENGTH>14</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
      <KEY>S_BLGTRH</KEY>
      <ENTRY>Belge Tarihi</ENTRY>
      <LENGTH>20</LENGTH>
@@ -69,12 +81,6 @@
      <KEY>S_MALZME</KEY>
      <ENTRY>Malzeme</ENTRY>
      <LENGTH>15</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>S_PARI</KEY>
-     <ENTRY>Pari</ENTRY>
-     <LENGTH>12</LENGTH>
     </item>
     <item>
      <ID>S</ID>
